@@ -9,7 +9,7 @@ from main import db
 class User(db.Model):
 
     __tablename__ = "user"
-    id = db.Column(Integer, primary_key=True, unique=True)
+    id = db.Column(Integer, primary_key=True, autoincrement=True)
     name = db.Column(String(255), nullable=False)
     email = db.Column(String(255), nullable=False)
     hashed_password = db.Column(String(80), nullable=False)

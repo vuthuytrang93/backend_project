@@ -1,9 +1,9 @@
 from sqlalchemy import DateTime, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
-
 from main import db
-from main.models import category, user
+from main.models.user import User
+from main.models.category import Category
 
 
 class Item(db.Model):
@@ -11,17 +11,26 @@ class Item(db.Model):
     """
     Init Item db
     """
-
     __tablename__ = "item"
-    id = db.Column(Integer, primary_key=True, unique=True)
+    id = db.Column(Integer, primary_key=True, autoincrement=True)
     name = db.Column(String(255), nullable=False)
     author_id = db.Column(Integer, ForeignKey("user.id"))
     category_id = db.Column(Integer, ForeignKey("category.id"))
     created_time = db.Column(DateTime(timezone=True), server_default=func.now())
     updated_time = db.Column(DateTime(timezone=True), onupdate=func.now())
 
-    author = relationship(user)  # Create relationship between an item & author
-    category = relationship(category)  # Create relationship between an item & category
+    author = relationship(User)  # Create relationship between an item & author
+    category = relationship(Category)  # Create relationship between an item & category
+
+    def __init__(self, name: str, author_id: int, category_id: int):
+        """Init user object
+        param : email
+        return: user database-object
+        """
+        self.name = name
+        self.author_id = author_id
+        self.category_id = category_id
+
 
     def save_to_db(self):
         """
@@ -43,7 +52,7 @@ class Item(db.Model):
         param : cls, id
         return: ItemModel instance
         """
-        return cls.query.filter_by(id=_id).first()
+        return cls.query.filter_by(id=_id)
 
     @classmethod
     def find_by_name(cls, name):
@@ -51,7 +60,7 @@ class Item(db.Model):
         param : cls, name
         return: ItemModel instance
         """
-        return cls.query.filter_by(name=name).first()
+        return cls.query.filter_by(name=name)
 
     @classmethod
     def find_by_category(cls, category_id):

@@ -3,6 +3,7 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 
 from main import db
+from main.models.user import User
 from main.models import user
 
 
@@ -13,13 +14,21 @@ class Category(db.Model):
     """
 
     __tablename__ = "category"
-    id = db.Column(Integer, primary_key=True, unique=True)
+    id = db.Column(Integer, primary_key=True, autoincrement=True)
     name = db.Column(String(255), nullable=False)
-    author_id = db.Column(Integer, ForeignKey("user.id"))
+    author_id = db.Column(Integer, ForeignKey("user.id"))  # Create foreign key
     created_time = db.Column(DateTime(timezone=True), server_default=func.now())
     updated_time = db.Column(DateTime(timezone=True), onupdate=func.now())
 
-    author = relationship(user)  # Create relationship between category and its author
+    author = relationship(User)  # Create relationship between category and its author
+
+    def __init__(self, name: str, author_id: int):
+        """Init category object
+        param : name, author_id
+        return: category database-object
+        """
+        self.name = name
+        self.author_id = author_id
 
     def save_to_db(self):
         """
