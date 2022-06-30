@@ -1,6 +1,6 @@
-from main.models.user import User
 from main.models.category import Category
 from main.models.item import Item
+from main.models.user import User
 
 
 def test_user_table(session):
@@ -77,9 +77,8 @@ def test_category_del(session):
     category = Category("Book", author_id)
     category.save_to_db()
     category.delete_from_db()
-    expected = None
     result = session.query(Category).first()
-    assert result == expected
+    assert result is None
 
 
 def test_category_find_by_name(session):
@@ -170,7 +169,7 @@ def test_item_del(session):
     item.save_to_db()
     item.delete_from_db()
     result = session.query(Item).first()
-    assert result == None
+    assert result is None
 
 
 def test_item_find_by_name(session):
@@ -211,7 +210,6 @@ def test_item_find_by_author(session):
     category_id = session.query(Category).filter_by(name="Book").first().id
     item = Item("Pride", author_id, category_id)
     item.save_to_db()
-    item_id = session.query(Item).filter_by(name="Pride").first().id
     result = Item.find_by_author(author_id).first()
     expected = session.query(Item).filter_by(author_id=author_id).first()
     assert result == expected
