@@ -181,7 +181,7 @@ def test_item_find_by_name(session):
     category_id = session.query(Category).filter_by(name="Book").first().id
     item = Item("Pride", author_id, category_id)
     item.save_to_db()
-    result = Item.find_by_name("Pride").first()
+    result = Item.find_by_name("Pride")
     expected = session.query(Item).filter_by(name="Pride").first()
     assert result == expected
 
@@ -196,7 +196,7 @@ def test_item_find_by_id(session):
     item = Item("Pride", author_id, category_id)
     item.save_to_db()
     item_id = session.query(Item).filter_by(name="Pride").first().id
-    result = Item.find_by_id(item_id).first()
+    result = Item.find_by_id(item_id)
     expected = session.query(Item).filter_by(id=item_id).first()
     assert result == expected
 

@@ -1,9 +1,10 @@
 from sqlalchemy import DateTime, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
+
 from main import db
-from main.models.user import User
 from main.models.category import Category
+from main.models.user import User
 
 
 class Item(db.Model):
@@ -11,6 +12,7 @@ class Item(db.Model):
     """
     Init Item db
     """
+
     __tablename__ = "item"
     id = db.Column(Integer, primary_key=True, autoincrement=True)
     name = db.Column(String(255), nullable=False)
@@ -30,7 +32,6 @@ class Item(db.Model):
         self.name = name
         self.author_id = author_id
         self.category_id = category_id
-
 
     def save_to_db(self):
         """
@@ -52,7 +53,7 @@ class Item(db.Model):
         param : cls, id
         return: ItemModel instance
         """
-        return cls.query.filter_by(id=_id)
+        return cls.query.filter_by(id=_id).first()
 
     @classmethod
     def find_by_name(cls, name):
@@ -60,7 +61,7 @@ class Item(db.Model):
         param : cls, name
         return: ItemModel instance
         """
-        return cls.query.filter_by(name=name)
+        return cls.query.filter_by(name=name).first()
 
     @classmethod
     def find_by_category(cls, category_id):

@@ -4,7 +4,6 @@ from sqlalchemy.sql import func
 
 from main import db
 from main.models.user import User
-from main.models import user
 
 
 class Category(db.Model):
