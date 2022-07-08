@@ -11,7 +11,7 @@ class User(db.Model):
     __tablename__ = "user"
     id = db.Column(Integer, primary_key=True, autoincrement=True)
     name = db.Column(String(255), nullable=False)
-    email = db.Column(String(255), nullable=False)
+    email = db.Column(String(255), nullable=False, unique=True)
     hashed_password = db.Column(String(80), nullable=False)
     created_time = db.Column(DateTime(timezone=True), default=datetime.now())
     updated_time = db.Column(DateTime(timezone=True), onupdate=func.now())
@@ -31,6 +31,14 @@ class User(db.Model):
         """
         db.session.add(self)
         db.session.commit()
+
+    def delete_from_db(self):
+        """
+        Delete a user from database
+        """
+        db.session.delete(self)
+        db.session.commit()
+
 
     @classmethod
     def find_by_id(cls, _id):

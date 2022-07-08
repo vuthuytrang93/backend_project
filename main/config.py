@@ -12,3 +12,4 @@ module = import_module(config_name)
 
 config = module.Config
 config.ENV = env
+config.SECRET_KEY = "123456"

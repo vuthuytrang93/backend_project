@@ -53,7 +53,6 @@ def session(monkeypatch):
     transaction.rollback()
     connection.close()
 
-
 @pytest.fixture(scope="function", autouse=True)
 def client(app, session):
     return app.test_client()

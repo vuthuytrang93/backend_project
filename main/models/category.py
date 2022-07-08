@@ -1,7 +1,7 @@
 from sqlalchemy import DateTime, ForeignKey, Integer, String
+
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
-
 from main import db
 from main.models.user import User
 
@@ -14,8 +14,8 @@ class Category(db.Model):
 
     __tablename__ = "category"
     id = db.Column(Integer, primary_key=True, autoincrement=True)
-    name = db.Column(String(255), nullable=False)
-    author_id = db.Column(Integer, ForeignKey("user.id"))  # Create foreign key
+    name = db.Column(String(255), nullable=False, unique=True)
+    author_id = db.Column(Integer, ForeignKey("user.id"))  # Create foreign key, unique
     created_time = db.Column(DateTime(timezone=True), server_default=func.now())
     updated_time = db.Column(DateTime(timezone=True), onupdate=func.now())
 

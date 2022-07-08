@@ -15,7 +15,7 @@ class Item(db.Model):
 
     __tablename__ = "item"
     id = db.Column(Integer, primary_key=True, autoincrement=True)
-    name = db.Column(String(255), nullable=False)
+    name = db.Column(String(255), nullable=False, unique=True)
     author_id = db.Column(Integer, ForeignKey("user.id"))
     category_id = db.Column(Integer, ForeignKey("category.id"))
     created_time = db.Column(DateTime(timezone=True), server_default=func.now())
@@ -24,12 +24,13 @@ class Item(db.Model):
     author = relationship(User)  # Create relationship between an item & author
     category = relationship(Category)  # Create relationship between an item & category
 
-    def __init__(self, name: str, author_id: int, category_id: int):
+    def __init__(self, name: str, description: str, author_id: int, category_id: int):
         """Init user object
         param : email
         return: user database-object
         """
         self.name = name
+        self.description = description
         self.author_id = author_id
         self.category_id = category_id
 
