@@ -1,8 +1,8 @@
+from main.engines.category import *
+from main.engines.user import *
 from main.models.category import Category
 from main.models.item import Item
 from main.models.user import User
-from main.engines.user import *
-from main.engines.category import *
 
 
 def test_create_category(session):
@@ -58,5 +58,3 @@ def test_delete_category(session):
     delete_category(author_id, category.id)
     result = session.query(Category).filter_by(name="Book").first()
     assert result is None
-
-

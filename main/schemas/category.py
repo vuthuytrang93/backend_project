@@ -23,4 +23,3 @@ class CategoryInfoSchema(BaseSchema):
     author_id = fields.Integer()
     created_time = fields.DateTime()
     updated_time = fields.DateTime()
-

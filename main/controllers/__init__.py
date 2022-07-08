@@ -1,3 +1,3 @@
-from . import user, category, item, probe
+from . import category, item, probe, user
 
 # register controllers and package

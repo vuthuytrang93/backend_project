@@ -1,7 +1,7 @@
+from main.engines.user import *
 from main.models.category import Category
 from main.models.item import Item
 from main.models.user import User
-from main.engines.user import *
 
 
 def test_get_user_info(session):
@@ -17,11 +17,11 @@ def test_check_user_exist(session):
     email = "john@got-it.ai"
     user = User("John", email, "hashed_pass1")
     user_existence_1 = check_user_exist(email)
-    assert (user_existence_1 is False)
+    assert user_existence_1 is False
     session.add(user)
     session.commit()
     user_existence_2 = check_user_exist(email)
-    assert (user_existence_2 is True)
+    assert user_existence_2 is True
 
 
 def test_create_user(session):
@@ -35,16 +35,16 @@ def test_create_user(session):
 def test_digest_password():
     password = "Johnny"
     digested = hash_password(password)
-    assert (type(digested) == type("") and digested != password)
+    assert type(digested) == type("") and digested != password
 
 
 def test_check_hashed_password():
-    password = 'password1'
-    wrong_input = 'dummypass'
+    password = "password1"
+    wrong_input = "dummypass"
     hashed = hash_password(password)
-    result1 = check_hashed_password(password,hashed)
-    result2 = check_hashed_password(wrong_input,hashed)
-    assert (result1 is True and result2 is False)
+    result1 = check_hashed_password(password, hashed)
+    result2 = check_hashed_password(wrong_input, hashed)
+    assert result1 is True and result2 is False
 
 
 def test_authenticate_user(session):
@@ -54,5 +54,4 @@ def test_authenticate_user(session):
     user = session.query(User).filter_by(name="Becky")
     result1 = verify_user("beck@got-it.ai", right_pass)
     result2 = verify_user("beck@got-it.ai", wrong_pass)
-    assert (result1 is True and result2 is False)
-
+    assert result1 is True and result2 is False

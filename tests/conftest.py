@@ -9,7 +9,6 @@ from alembic.config import Config
 from main import app as _app
 from main import db
 
-
 if os.getenv("ENVIRONMENT") != "test":
     print('Tests should be run with "ENVIRONMENT=test"')
     sys.exit(1)
@@ -53,8 +52,7 @@ def session(monkeypatch):
     transaction.rollback()
     connection.close()
 
+
 @pytest.fixture(scope="function", autouse=True)
 def client(app, session):
     return app.test_client()
-
-

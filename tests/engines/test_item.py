@@ -1,9 +1,9 @@
+from main.engines.category import *
+from main.engines.item import *
+from main.engines.user import *
 from main.models.category import Category
 from main.models.item import Item
 from main.models.user import User
-from main.engines.user import *
-from main.engines.category import *
-from main.engines.item import *
 
 
 def test_create_item(session):
@@ -16,7 +16,9 @@ def test_create_item(session):
     session.add(category)
     session.commit()
     category_id = session.query(Category).filter_by(name="Book").first().id
-    expected = create_item("Pride and Prejudice", "A romance novel", author_id, category_id)
+    expected = create_item(
+        "Pride and Prejudice", "A romance novel", author_id, category_id
+    )
     result = session.query(Item).filter_by(name="Pride and Prejudice").first()
     assert result == expected
 
@@ -91,7 +93,7 @@ def tes_update_item(session):
     session.add(item)
     session.commit()
     item_data = session.query(Item).filter_by(author_id=author_id).first()
-    update_item_description(item_data.id, author_id,"A new description")
+    update_item_description(item_data.id, author_id, "A new description")
     expected = "A new description"
     result = session.query(Item).filter_by(author_id=author_id).first().description
     assert result == expected
@@ -115,5 +117,3 @@ def test_delete_item(session):
     delete_item(item_data.id)
     result = session.query(Item).filter_by(name="Pride and Prejudice").first()
     assert result is None
-
-

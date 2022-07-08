@@ -40,5 +40,3 @@ class ItemInfoSchema(BaseSchema):
     category_id = fields.Integer()
     created_time = fields.DateTime()
     updated_time = fields.DateTime()
-
-

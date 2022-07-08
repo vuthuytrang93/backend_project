@@ -1,6 +1,5 @@
-from main.controllers.user import *
 from main.controllers.category import *
-
+from main.controllers.user import *
 
 # def test_create_category(client):
 #     create_user(name="Joe", email="joe@joes.com", password="123456")
@@ -12,8 +11,9 @@ def test_get_categories(client, session):
     create_user(name="Joe", email="joe@joes.com", password="123456")
     _id = session.query(User).filter_by(name="Joe").first().id
     create_category(name="Book", author_id=_id)
-    response = client.get('/categories', json={"category_id": 1})
+    response = client.get("/categories", json={"category_id": 1})
     assert response.status_code == 200
+
 
 # def test_get_category(client, session):
 #     create_user(name="Joe", email="joe@joes.com", password="123456")
